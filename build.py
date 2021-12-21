@@ -17,6 +17,5 @@ default_task = "publish"
 def set_properties(project):
     project.depends_on("gitpython==3.1.24")
     project.depends_on("semver==2.13.0")
-
-    for prop in project.properties:
-        print("{}:{}".format(prop, project.get_property(prop)))
+    project.build_depends_on("pytest")
+    project.build_depends_on("pytest-mock")
