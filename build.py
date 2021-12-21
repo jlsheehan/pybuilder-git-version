@@ -9,12 +9,15 @@ use_plugin('pypi:pybuilder_pytest_coverage')
 
 authors = [Author("Jeffrey Sheehan", "jeff.sheehan7@gmail.com")]
 summary = "A Git versioning plugin for PyBuilder"
-# description = 'file: README.md'
+description = """PyBuilder Git Version Plugin
+
+Git Version Plugin for PyBuilder will set the version for a PyBuilder project based on git tags.
+"""
 url = "http://som.example"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.1.0'
+version = '0.1.1'
 
 @init
 def set_properties(project):
