@@ -5,6 +5,7 @@ from pybuilder.core import init, Project, Logger, task
 from pybuilder_git_version.util import NoValidTagFoundError, find_latest_version_tag
 from git.exc import InvalidGitRepositoryError
 
+
 @init
 def init_pybuilder_git_version(project: Project, logger: Logger):
     project.set_property_if_unset("use_git_version", True)
@@ -22,12 +23,3 @@ def init_pybuilder_git_version(project: Project, logger: Logger):
             logger.warn("No git tags found")
     else:
         logger.debug("Not using git version")
-
-
-@task
-def bump_version(project: Project, logger: Logger):
-    repo = Repo(project.basedir)
-    latest_tag = util.find_latest_version_tag(repo, logger)
-    semver.bump_patch(latest_tag.name)
-    repo.create_tag('refs/head/master', ref='HEAD', message='1.1.1.1')
-    pass
