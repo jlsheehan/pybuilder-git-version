@@ -13,7 +13,7 @@ def find_latest_version_tag(repo: Repo, logger: Logger):
     valid_tags = [t for t in repo.tags if semver.VersionInfo.isvalid(t.name)]
     logger.debug("Valid tags are: %s", [t.name for t in valid_tags])
     if len(valid_tags) > 0:
-        latest_tag = valid_tags[0]
+        latest_tag = valid_tags[-1]
         commits = list(repo.iter_commits(repo.active_branch))
         latest_tag_is_latest_commit = commits[0] == latest_tag.commit and repo.active_branch.name == 'master'
         on_master_branch = repo.active_branch.name == 'master'

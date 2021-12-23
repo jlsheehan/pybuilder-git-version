@@ -13,11 +13,11 @@ description = """PyBuilder Git Version Plugin
 
 Git Version Plugin for PyBuilder will set the version for a PyBuilder project based on git tags.
 """
-url = "http://som.example"
+# url = "http://som.example"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.1.1'
+version = '0.1.2'
 
 @init
 def set_properties(project):
