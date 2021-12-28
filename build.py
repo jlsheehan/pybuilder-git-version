@@ -9,8 +9,6 @@ use_plugin('pypi:pybuilder_pytest_coverage')
 
 authors = [Author("Jeffrey Sheehan", "jeff.sheehan7@gmail.com")]
 summary = "A Git versioning plugin for PyBuilder"
-with open('README.md') as readme:
-    description = readme.read()
 url = "https://github.com/jlsheehan/pybuilder-git-version"
 
 name = "pybuilder-git-version"
@@ -23,3 +21,5 @@ def set_properties(project):
     project.depends_on("semver==2.13.0")
     project.build_depends_on("pytest")
     project.build_depends_on("pytest-mock")
+    project.set_property("distutils_readme_description", True)
+    project.set_property("distutils_description_overwrite", True)

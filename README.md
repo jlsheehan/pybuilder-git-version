@@ -1,6 +1,9 @@
 PyBuilder Git Version Plugin
 ============================
 
+Summary
+-------
+
 This project is a plugin for [PyBuilder](https://pybuilder.io) that sets the
 project version based on git tags.
 
