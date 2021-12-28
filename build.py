@@ -11,11 +11,11 @@ authors = [Author("Jeffrey Sheehan", "jeff.sheehan7@gmail.com")]
 summary = "A Git versioning plugin for PyBuilder"
 with open('README.md') as readme:
     description = readme.read()
-# url = "http://som.example"
+url = "https://github.com/jlsheehan/pybuilder-git-version"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.1.3'
+version = '0.1.4'
 
 @init
 def set_properties(project):
