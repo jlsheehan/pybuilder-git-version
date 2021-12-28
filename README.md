@@ -30,11 +30,11 @@ Examples
 The following table has examples of repo state and corresponding version
 number produced.
 
-| Tag        | Branch            | Clean / Dirty | Number of commits since tag | Version                |
-|------------|-------------------|---------------|-----------------------------|------------------------|
-| 0.0.1      | master            | clean         | 0                           | 0.0.1                  |
-| 0.0.1      | master            | dirty         | 0                           | 0.0.2+build.0          |
-| 0.2.2      | develop           | clean         | 5                           | 0.2.3+develop.5        |
-| 1.2.3      | develop           | dirty         | 3                           | 1.2.4+develop.3        |
-| 1.0.0-rc.1 | feature/TICKET100 | clean         | 5                           | 1.0.0-rc.1+ticket100.5 |
-| 0.0.1      | hotfix/BUG-20     | clean         | 0                           | 0.0.2+bug20.0          |
+| Tag        | Branch             | Clean / Dirty | Number of commits since tag | Version                |
+|------------|--------------------|---------------|-----------------------------|------------------------|
+| 0.0.1      | master             | clean         | 0                           | 0.0.1                  |
+| 0.0.1      | master             | dirty         | 0                           | 0.0.2+build.0          |
+| 0.2.2      | develop            | clean         | 5                           | 0.2.3+develop.5        |
+| 1.2.3      | develop            | dirty         | 3                           | 1.2.4+develop.3        |
+| 1.0.0-rc.1 | feature/TICKET-100 | clean         | 5                           | 1.0.0-rc.1+ticket100.5 |
+| 0.0.1      | hotfix/BUG-20      | clean         | 0                           | 0.0.2+bug20.0          |
