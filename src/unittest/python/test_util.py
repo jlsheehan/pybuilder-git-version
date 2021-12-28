@@ -28,7 +28,7 @@ def test_valid_tag(mocker):
     tag3 = mocker.Mock(TagReference)
     tag3.name = '0.0.3'
     repo = mocker.Mock(Repo)
-    repo.tags = [tag3, tag2, tag1]
+    repo.tags = [tag1, tag2, tag3]
     repo.active_branch.name = 'master'
     repo.is_dirty.return_value = False
     repo.iter_commits.return_value = [tag3.commit, tag2.commit, tag1.commit]
@@ -44,7 +44,7 @@ def test_valid_dev_tag(mocker):
     tag3.name = '0.0.3'
     latest_commit = mocker.Mock(Commit)
     repo = mocker.Mock(Repo)
-    repo.tags = [tag3, tag2, tag1]
+    repo.tags = [tag1, tag2, tag3]
     repo.active_branch.name = 'develop'
     repo.is_dirty.return_value = False
     repo.iter_commits.return_value = [latest_commit, tag3.commit, tag2.commit, tag1.commit]
