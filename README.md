@@ -7,7 +7,7 @@ project version based on git tags.
 Usage
 -----
 
-To use the plugin put the folling in the plugins section of `build.py`:
+To use the plugin put the following in the plugins section of `build.py`:
 
 ```python
 use_plugin('pybuilder_git_version')
@@ -15,10 +15,10 @@ use_plugin('pybuilder_git_version')
 
 The possible properties for use are:
 
-| Property                                     | Value        | Default |
-|----------------------------------------------|--------------|---------|
-| use_git_version                              | True / False | True   |
-|  git_version_commit_distance_as_build_number | True / False | True   |
+| Property                                    | Value        | Default | Usage                                      |
+|---------------------------------------------|--------------|---------|--------------------------------------------|
+| use_git_version                             | True / False | True    | Turns off pybuilder_git_version            |
+| git_version_commit_distance_as_build_number | True / False | True    | Uses commit count from tag as build number |
 
 
 Examples
@@ -34,3 +34,4 @@ number produced.
 | 0.2.2      | develop           | clean         | 5                           | 0.2.3+develop.5        |
 | 1.2.3      | develop           | dirty         | 3                           | 1.2.4+develop.3        |
 | 1.0.0-rc.1 | feature/TICKET100 | clean         | 5                           | 1.0.0-rc.1+ticket100.5 |
+| 0.0.1      | hotfix/BUG-20     | clean         | 0                           | 0.0.2+bug20.0          |
