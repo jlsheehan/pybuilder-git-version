@@ -10,6 +10,7 @@ use_plugin('pypi:pybuilder_pytest_coverage')
 authors = [Author("Jeffrey Sheehan", "jeff.sheehan7@gmail.com")]
 summary = "A Git versioning plugin for PyBuilder"
 url = "https://github.com/jlsheehan/pybuilder-git-version"
+license = "MIT License"
 
 name = "pybuilder-git-version"
 default_task = "publish"
