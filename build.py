@@ -14,7 +14,7 @@ license = "MIT License"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.1.4'
+version = '0.2.0'
 
 @init
 def set_properties(project):
