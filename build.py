@@ -4,6 +4,7 @@ from pybuilder.core import use_plugin, init, Author
 use_plugin("python.core")
 use_plugin("python.flake8")
 use_plugin("python.distutils")
+use_plugin('python.install_dependencies')
 use_plugin("pypi:pybuilder_pytest")
 use_plugin('pypi:pybuilder_pytest_coverage')
 
@@ -14,7 +15,7 @@ license = "MIT License"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.2.0'
+version = '0.3.0'
 
 @init
 def set_properties(project):

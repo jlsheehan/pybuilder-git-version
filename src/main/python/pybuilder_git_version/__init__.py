@@ -1,9 +1,8 @@
-import semver
 from git import Repo
-from pybuilder.core import init, Project, Logger, task
+from git.exc import InvalidGitRepositoryError
+from pybuilder.core import init, Project, Logger
 
 from pybuilder_git_version.util import NoValidTagFoundError, find_latest_version_tag
-from git.exc import InvalidGitRepositoryError
 
 
 @init
