@@ -3,7 +3,7 @@ import logging
 import pytest
 from git import Repo, TagReference, Commit
 
-from pybuilder_git_version.util import find_latest_version_tag, NoValidTagFoundError, sane_branch_name
+from pybuilder_git_version.util import find_latest_version, NoValidTagFoundError, sane_branch_name
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ def test_no_valid_tag(mocker):
     repo.tags = [tag1]
     repo.is_dirty.return_value = False
     with pytest.raises(NoValidTagFoundError):
-        find_latest_version_tag(repo, logger)
+        find_latest_version(repo, logger)
 
 
 def test_valid_tag(mocker):
@@ -32,7 +32,7 @@ def test_valid_tag(mocker):
     repo.active_branch.name = 'master'
     repo.is_dirty.return_value = False
     repo.iter_commits.return_value = [tag3.commit, tag2.commit, tag1.commit]
-    assert find_latest_version_tag(repo, logger) == '0.0.3'
+    assert find_latest_version(repo, logger) == '0.0.3'
 
 
 def test_valid_dev_tag(mocker):
@@ -48,7 +48,7 @@ def test_valid_dev_tag(mocker):
     repo.active_branch.name = 'develop'
     repo.is_dirty.return_value = False
     repo.iter_commits.return_value = [latest_commit, tag3.commit, tag2.commit, tag1.commit]
-    assert find_latest_version_tag(repo, logger) == '0.0.4+develop.1'
+    assert find_latest_version(repo, logger) == '0.0.4+develop.1'
 
 
 def test_sane_branch_name():

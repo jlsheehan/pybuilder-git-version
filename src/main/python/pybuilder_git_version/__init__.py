@@ -2,7 +2,7 @@ from git import Repo
 from git.exc import InvalidGitRepositoryError
 from pybuilder.core import init, Project, Logger
 
-from pybuilder_git_version.util import NoValidTagFoundError, find_latest_version_tag
+from pybuilder_git_version.util import NoValidTagFoundError, find_latest_version
 
 
 @init
@@ -12,7 +12,7 @@ def init_pybuilder_git_version(project: Project, logger: Logger):
     if project.get_property("use_git_version"):
         try:
             repo = Repo(project.basedir)
-            latest_tag = find_latest_version_tag(repo, logger)
+            latest_tag = find_latest_version(repo, logger)
             project.version = latest_tag
             project.set_property("dir_dist", f"$dir_target/dist/{project.name}-{project.version}")
             logger.info("Set project version to %s", project.version)

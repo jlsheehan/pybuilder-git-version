@@ -9,35 +9,48 @@ class NoValidTagFoundError(Exception):
     pass
 
 
-def find_latest_version_tag(repo: Repo, logger: Logger):
+def find_latest_version(repo: Repo, logger: Logger):
+    # valid_tags = [t for t in repo.tags if semver.VersionInfo.isvalid(t.name)]
+    # logger.debug("Valid tags are: %s", [t.name for t in valid_tags])
+    latest_tag, distance, branch_name = find_latest_tag_in_path(repo, logger)
+    detached_head = branch_name is None
+    on_master_branch = not detached_head and branch_name == 'master'
+    repo_dirty = repo.is_dirty()
+    if distance == 0 and (on_master_branch or detached_head) and not repo_dirty:
+        logger.info("Using unmodified tag %s", latest_tag)
+        return latest_tag.name
+    else:
+        logger.debug("Bumping patch and adding build")
+        current_version = semver.VersionInfo.parse(latest_tag.name)
+        build_token = 'build' if (on_master_branch or detached_head) else sane_branch_name(branch_name)
+        new_version = current_version.bump_patch().replace(build=f"{build_token}.{distance}")
+        return f"{new_version}"
+
+
+def find_latest_tag_in_path(repo: Repo, logger: Logger):
     valid_tags = [t for t in repo.tags if semver.VersionInfo.isvalid(t.name)]
     logger.debug("Valid tags are: %s", [t.name for t in valid_tags])
     if len(valid_tags) > 0:
-        latest_tag = valid_tags[-1]
+        valid_tags.reverse()
         try:
             commits = list(repo.iter_commits(repo.active_branch))
             branch_name = repo.active_branch.name
-            detached_head = False
         except TypeError:
             logger.debug("Have detached head")
             commits = list(repo.iter_commits())
             branch_name = None
-            detached_head = True
-        on_master_branch = (not detached_head) and branch_name == 'master'
-        latest_tag_is_latest_commit = commits[0] == latest_tag.commit
-        repo_dirty = repo.is_dirty()
-        if latest_tag_is_latest_commit and (on_master_branch or detached_head) and not repo_dirty:
-            logger.info("Using unmodified tag %s", latest_tag)
-            return latest_tag.name
-        else:
-            current_version = semver.bump_patch(latest_tag.name)
-            distance = commits.index(latest_tag.commit)
-            build_token = 'build' if (on_master_branch or detached_head) else sane_branch_name(branch_name)
-            current_version = semver.replace(current_version, build=f"{build_token}.{distance}")
-            return current_version
-    else:
-        logger.warn("No valid tags found")
-        raise NoValidTagFoundError("No valid version tag found")
+        for valid_tag in valid_tags:
+            logger.debug("Checking if %s in %s", valid_tag.commit, commits)
+            if valid_tag.commit in commits:
+                logger.debug("AAAAAAAAAAAa")
+                latest_tag = valid_tag
+                distance = commits.index(latest_tag.commit)
+                return latest_tag, distance, branch_name
+            else:
+                logger.debug("BBBBBBBBBBBBBB")
+    # didnt find anything...
+    logger.warning("No valid tags found")
+    raise NoValidTagFoundError("No valid version tag found")
 
 
 def sane_branch_name(branch_name):
