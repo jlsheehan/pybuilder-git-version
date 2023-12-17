@@ -9,12 +9,12 @@ class NoValidTagFoundError(Exception):
     pass
 
 
-def find_latest_version(repo: Repo, logger: Logger):
+def find_latest_version(repo: Repo, logger: Logger, master_branch_name: str = 'master') -> str:
     # valid_tags = [t for t in repo.tags if semver.VersionInfo.isvalid(t.name)]
     # logger.debug("Valid tags are: %s", [t.name for t in valid_tags])
     latest_tag, distance, branch_name = find_latest_tag_in_path(repo, logger)
     detached_head = branch_name is None
-    on_master_branch = not detached_head and branch_name == 'master'
+    on_master_branch = not detached_head and branch_name == master_branch_name
     repo_dirty = repo.is_dirty()
     if distance == 0 and (on_master_branch or detached_head) and not repo_dirty:
         logger.info("Using unmodified tag %s", latest_tag)
@@ -42,14 +42,11 @@ def find_latest_tag_in_path(repo: Repo, logger: Logger):
         for valid_tag in valid_tags:
             logger.debug("Checking if %s in %s", valid_tag.commit, commits)
             if valid_tag.commit in commits:
-                logger.debug("AAAAAAAAAAAa")
                 latest_tag = valid_tag
                 distance = commits.index(latest_tag.commit)
                 return latest_tag, distance, branch_name
-            else:
-                logger.debug("BBBBBBBBBBBBBB")
     # didnt find anything...
-    logger.warning("No valid tags found")
+    logger.warn("No valid tags found")
     raise NoValidTagFoundError("No valid version tag found")
 
 
