@@ -14,6 +14,7 @@ def find_latest_version(repo: Repo, logger: Logger, master_branch_name: str = 'm
     # logger.debug("Valid tags are: %s", [t.name for t in valid_tags])
     latest_tag, distance, branch_name = find_latest_tag_in_path(repo, logger)
     detached_head = branch_name is None
+    logger.debug("latest tag = %s, distance = %s, branch_name = %s, master_branch_name = %s", latest_tag, distance, branch_name, master_branch_name)
     on_master_branch = not detached_head and branch_name == master_branch_name
     repo_dirty = repo.is_dirty()
     if distance == 0 and (on_master_branch or detached_head) and not repo_dirty:
@@ -46,7 +47,7 @@ def find_latest_tag_in_path(repo: Repo, logger: Logger):
                 distance = commits.index(latest_tag.commit)
                 return latest_tag, distance, branch_name
     # didnt find anything...
-    logger.warn("No valid tags found")
+    logger.info("No valid tags found")
     raise NoValidTagFoundError("No valid version tag found")
 
 

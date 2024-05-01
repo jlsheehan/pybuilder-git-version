@@ -15,11 +15,12 @@ license = "MIT License"
 
 name = "pybuilder-git-version"
 default_task = "publish"
-version = '0.5.0'
+version = '0.6.0'
+
 
 @init
 def set_properties(project):
-    project.depends_on("gitpython==3.1.24")
+    project.depends_on("gitpython==3.1.43")
     project.depends_on("semver==2.13.0")
     project.build_depends_on("pytest")
     project.build_depends_on("pytest-mock")

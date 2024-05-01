@@ -1,6 +1,6 @@
 from git import Repo
 from git.exc import InvalidGitRepositoryError
-from pybuilder.core import init, Project, Logger
+from pybuilder.core import init, Project, Logger, before
 
 from pybuilder_git_version.util import NoValidTagFoundError, find_latest_version
 
@@ -10,6 +10,11 @@ def init_pybuilder_git_version(project: Project, logger: Logger):
     project.set_property_if_unset("use_git_version", True)
     project.set_property_if_unset("git_version_commit_distance_as_build_number", True)
     project.set_property_if_unset("git_version_master_branch", "master")
+
+
+@before("prepare", only_once=True)
+def update_version(project: Project, logger: Logger):
+    logger.info("Using master branch %s", project.get_property("git_version_master_branch"))
     if project.get_property("use_git_version"):
         try:
             repo = Repo(project.basedir)
@@ -22,4 +27,4 @@ def init_pybuilder_git_version(project: Project, logger: Logger):
         except NoValidTagFoundError:
             logger.warn("No git tags found")
     else:
-        logger.debug("Not using git version")
+        logger.info("Not using git version, disabled")
